@@ -1,0 +1,12 @@
+/.env
+/.env.local
+/.env.*.local
+/vendor/
+/node_modules/
+/var/
+/.idea/
+/.vscode/
+.DS_Store
+/.env.dev
+/.env.test
+/compose.yaml.bak
