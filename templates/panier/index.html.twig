@@ -1,0 +1,41 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon panier - Maison Éclat{% endblock %}
+
+{% block body %}
+<section class="container" style="padding: 60px 20px;">
+    <h1>Mon panier</h1>
+
+    {% for message in app.flashes('success') %}
+        <p style="color: green;">{{ message }}</p>
+    {% endfor %}
+
+    {% for message in app.flashes('error') %}
+        <p style="color: red;">{{ message }}</p>
+    {% endfor %}
+
+    {% if produitsPanier is empty %}
+        <p>Votre panier est vide.</p>
+        <a href="{{ path('app_home') }}">Continuer mes achats</a>
+    {% else %}
+        {% for produit in produitsPanier %}
+            <article style="display: flex; gap: 20px; align-items: center; margin: 25px 0;">
+                <div>
+                    <h3>{{ produit.titre|default('Produit beauté') }}</h3>
+                    <p>Prix unitaire : {{ (produit.prix|default(0))|number_format(2, ',', ' ') }} €</p>
+                    <p>Quantité : {{ produit.quantite }}</p>
+                    <p>Sous-total : {{ produit.sousTotal|number_format(2, ',', ' ') }} €</p>
+
+                    <form method="post" action="{{ path('panier_supprimer', {documentId: produit.documentId}) }}">
+                        <button type="submit">Supprimer</button>
+                    </form>
+                </div>
+            </article>
+        {% endfor %}
+
+        <h2>Total : {{ total|number_format(2, ',', ' ') }} €</h2>
+        <a href="{{ path('app_home') }}">Continuer mes achats</a>
+    {% endif %}
+</section>
+{% endblock %}
